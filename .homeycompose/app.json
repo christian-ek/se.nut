@@ -1,0 +1,36 @@
+{
+  "id": "se.nut",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Network UPS Tools (NUT)"
+  },
+  "description": {
+    "en": "Adds support for Network UPS Tools."
+  },
+  "category": [
+    "energy"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Christian Ek",
+    "email": "christian.ek@live.se"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "christianoak"
+      }
+    }
+  },
+  "support": "mailto:christian.ek@live.se"
+}

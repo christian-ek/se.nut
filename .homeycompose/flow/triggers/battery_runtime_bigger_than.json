@@ -1,0 +1,28 @@
+{
+  "title": {
+    "en": "Battery runtime is bigger than..",
+    "sv": "Batteridriftstid är större än.."
+  },
+  "titleFormatted": {
+    "en": "Battery runtime is bigger than [[value]]s",
+    "sv": "Batteridriftstid är större än [[value]]s"
+  },
+  "hint": {
+    "en": "This flowcard triggers when the battery runtime is bigger than set value.",
+    "sv": "Det här flödeskortet triggas när batteridriftstiden är större än satt värde."
+  },
+  "platforms": [
+    "local"
+  ],
+  "args": [
+    {
+      "name": "value",
+      "type": "number"
+    },
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=ups"
+    }
+  ]
+}
