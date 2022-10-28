@@ -23,10 +23,6 @@ class UPSDevice extends Device {
     this.interval = setInterval(async () => {
       await this.getDeviceData();
     }, updateInterval);
-
-    this.driver.ready().then(() => {
-      this.driver.triggerMyFlow(device, tokens, state);
-    });
   }
 
   async getDeviceData() {
