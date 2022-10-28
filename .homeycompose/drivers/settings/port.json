@@ -1,0 +1,14 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Port",
+    "sv": "Port"
+  },
+  "hint": {
+    "en": "Port to NUT server.",
+    "sv": "Port till NUT servern."
+  },
+  "value": 3493,
+  "min": 1,
+  "max": 65535
+}

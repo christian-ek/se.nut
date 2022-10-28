@@ -1,0 +1,365 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "se.nut",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Network UPS Tools (NUT)"
+  },
+  "description": {
+    "en": "Adds support for Network UPS Tools."
+  },
+  "category": [
+    "energy"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Christian Ek",
+    "email": "christian.ek@live.se"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "christianoak"
+      }
+    }
+  },
+  "support": "mailto:christian.ek@live.se",
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "Battery mode just deactivated",
+          "sv": "Batteridriftsläge har avaktiverats"
+        },
+        "hint": {
+          "en": "This flowcard triggers when the UPS leaves battery mode.",
+          "sv": "Det här flödeskortet triggas när batteridriftsläget har avaktiverats."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+          }
+        ],
+        "id": "alarm_status_false"
+      },
+      {
+        "title": {
+          "en": "Battery mode just activated",
+          "sv": "Batteridriftsläge har aktiverats"
+        },
+        "hint": {
+          "en": "This flowcard triggers when the UPS enters battery mode.",
+          "sv": "Det här flödeskortet triggas när batteridriftsläget har aktiverats."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+          }
+        ],
+        "id": "alarm_status_true"
+      },
+      {
+        "title": {
+          "en": "Battery runtime is bigger than..",
+          "sv": "Batteridriftstid är större än.."
+        },
+        "titleFormatted": {
+          "en": "Battery runtime is bigger than [[value]]s",
+          "sv": "Batteridriftstid är större än [[value]]s"
+        },
+        "hint": {
+          "en": "This flowcard triggers when the battery runtime is bigger than set value.",
+          "sv": "Det här flödeskortet triggas när batteridriftstiden är större än satt värde."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "name": "value",
+            "type": "number"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+          }
+        ],
+        "id": "battery_runtime_bigger_than"
+      },
+      {
+        "title": {
+          "en": "Battery runtime is lower than..",
+          "sv": "Batteridriftstid är mindre än.."
+        },
+        "titleFormatted": {
+          "en": "Battery runtime is lower than [[value]]s",
+          "sv": "Batteridriftstid är mindre än [[value]]s"
+        },
+        "hint": {
+          "en": "This flowcard triggers when the battery runtime is lower than set value.",
+          "sv": "Det här flödeskortet triggas när batteridriftstiden är mindre än satt värde."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "name": "value",
+            "type": "number"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+          }
+        ],
+        "id": "battery_runtime_lower_than"
+      },
+      {
+        "title": {
+          "en": "Status has changed",
+          "sv": "Status har ändrats"
+        },
+        "hint": {
+          "en": "This flowcard triggers when the status has changed.",
+          "sv": "Det här flödeskortet triggas när statusen har ändrats."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "status",
+              "sv": "status"
+            },
+            "example": {
+              "en": "status",
+              "sv": "status"
+            }
+          }
+        ],
+        "id": "status_changed"
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "class": "other",
+      "images": {
+        "small": "/drivers/ups/assets/images/small.png",
+        "large": "/drivers/ups/assets/images/large.png",
+        "xlarge": "/drivers/ups/assets/images/xlarge.png"
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "UPS"
+      },
+      "capabilities": [
+        "measure_battery",
+        "alarm_status",
+        "status",
+        "voltage.input",
+        "voltage.output",
+        "measure_temperature",
+        "battery_runtime"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "decimals": 1,
+          "title": {
+            "en": "Battery temperature",
+            "sv": "Batteritemperatur"
+          }
+        },
+        "voltage.input": {
+          "title": {
+            "en": "Voltage input",
+            "sv": "Ingångsspänning"
+          }
+        },
+        "voltage.output": {
+          "title": {
+            "en": "Voltage output",
+            "sv": "Utgångsspänning"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "start"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "ups",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Server settings",
+            "se": "Serverinställningar"
+          },
+          "children": [
+            {
+              "id": "ip",
+              "type": "text",
+              "label": {
+                "en": "IP address",
+                "sv": "IP adress"
+              },
+              "hint": {
+                "en": "IP address to NUT server.",
+                "sv": "IP adress till NUT servern."
+              },
+              "value": "-"
+            },
+            {
+              "id": "port",
+              "type": "number",
+              "label": {
+                "en": "Port",
+                "sv": "Port"
+              },
+              "hint": {
+                "en": "Port to NUT server.",
+                "sv": "Port till NUT servern."
+              },
+              "value": 3493,
+              "min": 1,
+              "max": 65535
+            },
+            {
+              "id": "interval",
+              "type": "number",
+              "label": {
+                "en": "Interval",
+                "sv": "Intervall"
+              },
+              "hint": {
+                "en": "Polling interval for device.",
+                "sv": "Intervall för dataförfrågningar till enhet."
+              },
+              "value": 60,
+              "min": 10,
+              "max": 3600,
+              "units": {
+                "en": "seconds",
+                "sv": "sekunder"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "alarm_status": {
+      "type": "boolean",
+      "title": {
+        "en": "Battery mode alarm",
+        "sv": "Batteridriftslarm"
+      },
+      "icon": "/assets/icons/plug.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insightsTitleTrue": {
+        "en": "UPS entered battery mode",
+        "sv": "UPS gick in i batteriläge"
+      },
+      "insightsTitleFalse": {
+        "en": "UPS left battery mode",
+        "sv": "UPS lämnade batteriläget"
+      }
+    },
+    "battery_runtime": {
+      "type": "number",
+      "title": {
+        "en": "Battery runtime",
+        "sv": "Batteridriftstid"
+      },
+      "icon": "/assets/icons/time-left.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "s",
+        "sv": "s"
+      }
+    },
+    "status": {
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "sv": "Status"
+      },
+      "icon": "/assets/icons/battery-level.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false
+    },
+    "voltage": {
+      "type": "number",
+      "title": {
+        "en": "Voltage",
+        "sv": "Spänning"
+      },
+      "icon": "/assets/icons/voltage.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "V",
+        "sv": "V"
+      },
+      "min": 0,
+      "max": 500,
+      "step": 0.1
+    }
+  }
+}

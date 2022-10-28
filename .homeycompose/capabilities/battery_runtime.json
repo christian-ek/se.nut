@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Battery runtime",
+    "sv": "Batteridriftstid"
+  },
+  "icon": "/assets/icons/time-left.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": "s",
+    "sv": "s"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Battery mode alarm",
+    "sv": "Batteridriftslarm"
+  },
+  "icon": "/assets/icons/plug.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insightsTitleTrue": {
+    "en": "UPS entered battery mode",
+    "sv": "UPS gick in i batteriläge"
+  },
+  "insightsTitleFalse": {
+    "en": "UPS left battery mode",
+    "sv": "UPS lämnade batteriläget"
+  }
+}

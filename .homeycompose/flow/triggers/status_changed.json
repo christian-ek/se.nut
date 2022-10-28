@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "Status has changed",
+    "sv": "Status har ändrats"
+  },
+  "hint": {
+    "en": "This flowcard triggers when the status has changed.",
+    "sv": "Det här flödeskortet triggas när statusen har ändrats."
+  },
+  "platforms": [
+    "local"
+  ],
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=ups"
+    }
+  ]
+}

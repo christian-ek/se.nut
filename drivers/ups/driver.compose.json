@@ -1,0 +1,54 @@
+{
+  "name": {
+    "en": "UPS"
+  },
+  "capabilities": [
+    "measure_battery",
+    "alarm_status",
+    "status",
+    "voltage.input",
+    "voltage.output",
+    "measure_temperature",
+    "battery_runtime"
+  ],
+  "capabilitiesOptions": {
+    "measure_temperature": {
+      "decimals": 1,
+      "title": {
+        "en": "Battery temperature",
+        "sv": "Batteritemperatur"
+      }
+    },
+    "voltage.input": {
+      "title": {
+        "en": "Voltage input",
+        "sv": "Ingångsspänning"
+      }
+    },
+    "voltage.output": {
+      "title": {
+        "en": "Voltage output",
+        "sv": "Utgångsspänning"
+      }
+    }
+  },
+  "pair": [
+    {
+      "id": "start"
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "$extends": [
+    "defaults"
+  ]
+}

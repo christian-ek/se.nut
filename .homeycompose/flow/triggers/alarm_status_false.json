@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "Battery mode just deactivated",
+    "sv": "Batteridriftsläge har avaktiverats"
+  },
+  "hint": {
+    "en": "This flowcard triggers when the UPS leaves battery mode.",
+    "sv": "Det här flödeskortet triggas när batteridriftsläget har avaktiverats."
+  },
+  "platforms": [
+    "local"
+  ],
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=ups"
+    }
+  ]
+}
