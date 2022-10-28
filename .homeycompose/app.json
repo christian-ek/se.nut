@@ -34,5 +34,23 @@
     }
   },
   "support": "mailto:christian.ek@live.se",
-  "brandColor": "#9c5400"
+  "brandColor": "#9c5400",
+  "tags": {
+    "en": [
+      "UPS",
+      "Uninterruptible Power Supply",
+      "Network",
+      "Battery",
+      "NUT",
+      "Network UPS Tools"
+    ],
+    "sv": [
+      "UPS",
+      "Uninterruptible Power Supply",
+      "Network",
+      "Batteri",
+      "NUT",
+      "Network UPS Tools"
+    ]
+  }
 }

@@ -36,6 +36,24 @@
   },
   "support": "mailto:christian.ek@live.se",
   "brandColor": "#9c5400",
+  "tags": {
+    "en": [
+      "UPS",
+      "Uninterruptible Power Supply",
+      "Network",
+      "Battery",
+      "NUT",
+      "Network UPS Tools"
+    ],
+    "sv": [
+      "UPS",
+      "Uninterruptible Power Supply",
+      "Network",
+      "Batteri",
+      "NUT",
+      "Network UPS Tools"
+    ]
+  },
   "flow": {
     "triggers": [
       {
@@ -166,8 +184,7 @@
       "class": "other",
       "images": {
         "small": "/drivers/ups/assets/images/small.png",
-        "large": "/drivers/ups/assets/images/large.png",
-        "xlarge": "/drivers/ups/assets/images/xlarge.png"
+        "large": "/drivers/ups/assets/images/large.png"
       },
       "platforms": [
         "local"
@@ -207,6 +224,11 @@
             "sv": "Utgångsspänning"
           }
         }
+      },
+      "energy": {
+        "batteries": [
+          "OTHER"
+        ]
       },
       "pair": [
         {

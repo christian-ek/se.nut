@@ -32,6 +32,9 @@
       }
     }
   },
+  "energy": {
+    "batteries": ["OTHER"]
+  },
   "pair": [
     {
       "id": "start"
