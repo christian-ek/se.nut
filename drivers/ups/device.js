@@ -29,42 +29,14 @@ class UPSDevice extends Device {
     const { device } = this;
     this.log(`[${this.getName()}][${device.id}]`, 'Refresh device');
 
-    const result = await this.nut.GetUPSVars(device.name);
-
-    if (result) {
-      const status = parseUPSStatus(result);
-
-      this.log(status);
-
-      this.setCapabilityValue('measure_battery', status.battery)
-        .catch(this.error);
-
-      this.setCapabilityValue('measure_temperature', status.battery_temperature)
-        .catch(this.error);
-
-      this.setCapabilityValue('alarm_status', status.alarm_status)
-        .catch(this.error);
-
-      this.setCapabilityValue('voltage.input', status.input_voltage)
-        .catch(this.error);
-
-      this.setCapabilityValue('voltage.output', status.output_voltage)
-        .catch(this.error);
-
-      this.setCapabilityValue('battery_runtime', status.battery_runtime)
-        .catch(this.error);
-
-      this.setCapabilityValue('status', status.status_readable)
-        .catch(this.error);
-
-      this.batteryRuntimeLowerThanTrigger.trigger(this, {}, { runtime: status.battery_runtime })
-        .then(() => {
-          this.log('Done trigger flow card battery_runtime_lower_than');
-        })
-        .catch((error) => {
-          this.log(`Cannot trigger flow card battery_runtime_lower_than: ${error}`);
-        });
-    }
+    await this.nut.GetUPSVars(device.name)
+      .then((res) => parseUPSStatus(res))
+      .then((res) => {
+        this.setCapabilities(res);
+        this.runTriggers(res);
+        this.log(res);
+      })
+      .catch((err) => this.log(err));
   }
 
   initNut() {
@@ -80,6 +52,47 @@ class UPSDevice extends Device {
     });
 
     this.nut.start();
+  }
+
+  setCapabilities(status) {
+    this.setCapabilityValue('measure_battery', status.battery)
+      .catch(this.error);
+
+    this.setCapabilityValue('measure_temperature', status.battery_temperature)
+      .catch(this.error);
+
+    this.setCapabilityValue('alarm_status', status.alarm_status)
+      .catch(this.error);
+
+    this.setCapabilityValue('voltage.input', status.input_voltage)
+      .catch(this.error);
+
+    this.setCapabilityValue('voltage.output', status.output_voltage)
+      .catch(this.error);
+
+    this.setCapabilityValue('battery_runtime', status.battery_runtime)
+      .catch(this.error);
+
+    this.setCapabilityValue('status', status.status_readable)
+      .catch(this.error);
+  }
+
+  runTriggers(status) {
+    this.homey.app.batteryRuntimeLowerThanTrigger.trigger(this, {}, { runtime: status.battery_runtime })
+      .then(() => {
+        this.log('Done trigger flow card battery_runtime_lower_than');
+      })
+      .catch((error) => {
+        this.log(`Cannot trigger flow card battery_runtime_lower_than: ${error}`);
+      });
+
+    this.homey.app.batteryRuntimeBiggerThanTrigger.trigger(this, {}, { runtime: status.battery_runtime })
+      .then(() => {
+        this.log('Done trigger flow card battery_runtime_bigger_than');
+      })
+      .catch((error) => {
+        this.log(`Cannot trigger flow card battery_runtime_bigger_than: ${error}`);
+      });
   }
 
   /**

@@ -12,6 +12,11 @@ class MyApp extends Homey.App {
 
     this.batteryRuntimeLowerThanTrigger = this.homey.flow.getDeviceTriggerCard('battery_runtime_lower_than');
     this.batteryRuntimeLowerThanTrigger.registerRunListener(async (args, state) => {
+      return args.value > state.runtime;
+    });
+
+    this.batteryRuntimeBiggerThanTrigger = this.homey.flow.getDeviceTriggerCard('battery_runtime_bigger_than');
+    this.batteryRuntimeBiggerThanTrigger.registerRunListener(async (args, state) => {
       return args.value < state.runtime;
     });
   }
