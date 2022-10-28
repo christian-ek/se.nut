@@ -9,14 +9,10 @@ class MyApp extends Homey.App {
    */
   async onInit() {
     this.log('NUT has been initialized');
-    const runAnimationAction = this.homey.flow.getActionCard('battery_runtime_lower_than');
 
-    runAnimationAction.registerRunListener(async (args, state) => {
-      if (args.duration != null) {
-        // do something with the duration
-        // (e.g. run an animation for duration milliseconds)
-
-      }
+    this.batteryRuntimeLowerThanTrigger = this.homey.flow.getDeviceTriggerCard('battery_runtime_lower_than');
+    this.batteryRuntimeLowerThanTrigger.registerRunListener(async (args, state) => {
+      return args.value < state.runtime;
     });
   }
 

@@ -1,4 +1,5 @@
 {
+  "id": "battery_runtime_lower_than",
   "title": {
     "en": "Battery runtime is lower than..",
     "sv": "Batteridriftstid är mindre än.."

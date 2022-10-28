@@ -11,7 +11,8 @@
     "en": "Network UPS Tools (NUT)"
   },
   "description": {
-    "en": "Adds support for Network UPS Tools."
+    "en": "Adds support for Network UPS Tools.",
+    "sv": "Lägger till support för Network UPS Tools."
   },
   "category": [
     "energy"
@@ -34,9 +35,11 @@
     }
   },
   "support": "mailto:christian.ek@live.se",
+  "brandColor": "#9c5400",
   "flow": {
     "triggers": [
       {
+        "id": "alarm_status_false",
         "title": {
           "en": "Battery mode just deactivated",
           "sv": "Batteridriftsläge har avaktiverats"
@@ -54,10 +57,10 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ],
-        "id": "alarm_status_false"
+        ]
       },
       {
+        "id": "alarm_status_true",
         "title": {
           "en": "Battery mode just activated",
           "sv": "Batteridriftsläge har aktiverats"
@@ -75,10 +78,10 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ],
-        "id": "alarm_status_true"
+        ]
       },
       {
+        "id": "battery_runtime_bigger_than",
         "title": {
           "en": "Battery runtime is bigger than..",
           "sv": "Batteridriftstid är större än.."
@@ -104,10 +107,10 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ],
-        "id": "battery_runtime_bigger_than"
+        ]
       },
       {
+        "id": "battery_runtime_lower_than",
         "title": {
           "en": "Battery runtime is lower than..",
           "sv": "Batteridriftstid är mindre än.."
@@ -133,10 +136,10 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ],
-        "id": "battery_runtime_lower_than"
+        ]
       },
       {
+        "id": "status_changed",
         "title": {
           "en": "Status has changed",
           "sv": "Status har ändrats"
@@ -154,22 +157,7 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ],
-        "tokens": [
-          {
-            "name": "status",
-            "type": "string",
-            "title": {
-              "en": "status",
-              "sv": "status"
-            },
-            "example": {
-              "en": "status",
-              "sv": "status"
-            }
-          }
-        ],
-        "id": "status_changed"
+        ]
       }
     ]
   },

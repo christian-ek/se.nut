@@ -56,6 +56,14 @@ class UPSDevice extends Device {
 
       this.setCapabilityValue('status', status.status_readable)
         .catch(this.error);
+
+      this.batteryRuntimeLowerThanTrigger.trigger(this, {}, { runtime: status.battery_runtime })
+        .then(() => {
+          this.log('Done trigger flow card battery_runtime_lower_than');
+        })
+        .catch((error) => {
+          this.log(`Cannot trigger flow card battery_runtime_lower_than: ${error}`);
+        });
     }
   }
 

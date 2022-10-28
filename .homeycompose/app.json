@@ -10,7 +10,8 @@
     "en": "Network UPS Tools (NUT)"
   },
   "description": {
-    "en": "Adds support for Network UPS Tools."
+    "en": "Adds support for Network UPS Tools.",
+    "sv": "Lägger till support för Network UPS Tools."
   },
   "category": [
     "energy"
@@ -32,5 +33,6 @@
       }
     }
   },
-  "support": "mailto:christian.ek@live.se"
+  "support": "mailto:christian.ek@live.se",
+  "brandColor": "#9c5400"
 }
