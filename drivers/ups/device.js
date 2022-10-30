@@ -48,10 +48,16 @@ class UPSDevice extends Device {
 
     this.nut.on('close', () => {
       this.log('Connection closed. Starting again..');
-      this.nut.start();
+      this.nut.start()
+        .then(() => this.nut.SetUsername(this.getSetting.username))
+        .then(() => this.nut.SetPassword(this.getSetting.password))
+        .catch((err) => this.log(err));
     });
 
-    this.nut.start();
+    this.nut.start()
+      .then(() => this.nut.SetUsername(this.getSetting.username))
+      .then(() => this.nut.SetPassword(this.getSetting.password))
+      .catch((err) => this.log(err));
   }
 
   setCapabilities(status) {
@@ -120,7 +126,10 @@ class UPSDevice extends Device {
   }) {
     const { interval } = this;
     for (const name of changedKeys) {
-      this.log(`Setting '${name}' set '${oldSettings[name]}' => '${newSettings[name]}'`);
+      /* Log setting changes except for password */
+      if (name !== 'password') {
+        this.log(`Setting '${name}' set '${oldSettings[name]}' => '${newSettings[name]}'`);
+      }
     }
     if (oldSettings.interval !== newSettings.interval) {
       this.log(`Delete old interval of ${oldSettings.interval}s and creating new ${newSettings.interval}s`);
