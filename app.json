@@ -366,6 +366,32 @@
               "max": 65535
             },
             {
+              "id": "username",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "sv": "Lösenord"
+              },
+              "hint": {
+                "en": "Password to NUT server.",
+                "sv": "Lösenord till NUT servern."
+              },
+              "value": "-"
+            },
+            {
+              "id": "password",
+              "type": "text",
+              "label": {
+                "en": "Username",
+                "sv": "Användarnamn"
+              },
+              "hint": {
+                "en": "Username to NUT server.",
+                "sv": "Användarnamn till NUT servern."
+              },
+              "value": "-"
+            },
+            {
               "id": "interval",
               "type": "number",
               "label": {
@@ -420,8 +446,8 @@
       "getable": true,
       "setable": false,
       "units": {
-        "en": "s",
-        "sv": "s"
+        "en": "seconds",
+        "sv": "sekunder"
       }
     },
     "status": {
