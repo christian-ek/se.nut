@@ -12,6 +12,8 @@
         document.getElementById(`gatewayIP`).value = data.ip;
         document.getElementById(`gatewayPort`).value = data.port;
         document.getElementById(`gatewayUpdateTime`).value = data.interval;
+        document.getElementById(`gatewayUsername`).username = data.username;
+        document.getElementById(`gatewayPassword`).password = data.password;
       }
     }
   });
@@ -28,8 +30,16 @@
         let gatewayIP = document.getElementById(`gatewayIP`);
         let gatewayPort = document.getElementById(`gatewayPort`);
         let gatewayUpdateTime = document.getElementById(`gatewayUpdateTime`);
+        let gatewayUsername = document.getElementById(`gatewayUsername`);
+        let gatewayPassword = document.getElementById(`gatewayPassword`);
 
-        let data = { ip: gatewayIP.value, port: gatewayPort.value, interval: Number(gatewayUpdateTime.value || 60) };
+        let data = {
+          ip: gatewayIP.value,
+          port: gatewayPort.value,
+          interval: Number(gatewayUpdateTime.value || 60),
+          username: gatewayUsername.value,
+          password: gatewayPassword.value
+        };
 
         Homey.emit("connect", data, (error) => {
           Homey.hideLoadingOverlay();
@@ -64,6 +74,12 @@
         </div>
         <div class="input-group mb-3">
             <input type="text" class="form-control" value="3493" id="gatewayPort" aria-describedby="basic-addon3" placeholder="Port" style="border: 1px solid #ced4da; padding: 0.375rem 0.75rem;" />
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="gatewayUsername" aria-describedby="basic-addon3" placeholder="Username" style="border: 1px solid #ced4da; padding: 0.375rem 0.75rem;" />
+        </div>
+        <div class="input-group mb-3">
+            <input type="password" class="form-control" id="gatewayPassword" aria-describedby="basic-addon3" placeholder="Password" style="border: 1px solid #ced4da; padding: 0.375rem 0.75rem;" />
         </div>
         <div class="input-group mb-3"><small id="period" class="form-text text-muted">Polling period, seconds</small></div>
         <div class="input-group mb-3"><input type="number" class="form-control" id="gatewayUpdateTime" aria-describedby="basic-addon3" placeholder="60" min="5" max="3600" /></div>
