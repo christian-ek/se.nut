@@ -14,7 +14,6 @@ class UPSDevice extends Device {
   async onInit() {
     this.initNut();
 
-    this.log('UPS device has been initialized');
     this.device = this.getData();
     const updateInterval = Number(this.getSetting('interval')) * 1000;
     const { device } = this;
@@ -23,6 +22,8 @@ class UPSDevice extends Device {
     this.interval = setInterval(async () => {
       await this.getDeviceData();
     }, updateInterval);
+
+    this.log('UPS device has been initialized');
   }
 
   async getDeviceData() {
@@ -33,7 +34,6 @@ class UPSDevice extends Device {
       .then((res) => parseUPSStatus(res))
       .then((res) => {
         this.setCapabilities(res);
-        this.runTriggers(res);
         this.log(res);
       })
       .catch((err) => this.log(err));
@@ -81,24 +81,6 @@ class UPSDevice extends Device {
 
     this.setCapabilityValue('status', status.status_readable)
       .catch(this.error);
-  }
-
-  runTriggers(status) {
-    this.homey.app.batteryRuntimeLowerThanTrigger.trigger(this, {}, { runtime: status.battery_runtime })
-      .then(() => {
-        this.log('Done trigger flow card battery_runtime_lower_than');
-      })
-      .catch((error) => {
-        this.log(`Cannot trigger flow card battery_runtime_lower_than: ${error}`);
-      });
-
-    this.homey.app.batteryRuntimeBiggerThanTrigger.trigger(this, {}, { runtime: status.battery_runtime })
-      .then(() => {
-        this.log('Done trigger flow card battery_runtime_bigger_than');
-      })
-      .catch((error) => {
-        this.log(`Cannot trigger flow card battery_runtime_bigger_than: ${error}`);
-      });
   }
 
   /**

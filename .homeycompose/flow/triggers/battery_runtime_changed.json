@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "Battery runtime has changed",
+    "sv": "Batteridriftstiden har ändrats"
+  },
+  "hint": {
+    "en": "This flowcard triggers when the battery runtime has changed.",
+    "sv": "Det här flödeskortet triggas när batteridriftstiden har ändrats."
+  },
+  "platforms": [
+    "local"
+  ],
+  "tokens": [
+    {
+        "name": "battery_runtime",
+        "type": "number",
+        "title": {
+            "en": "Battery runtime seconds",
+            "sv": "Batteridriftstid sekunder"
+        },
+        "example": 120
+    }
+],
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=ups"
+    }
+  ]
+}
+
