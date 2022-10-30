@@ -57,7 +57,6 @@
   "flow": {
     "triggers": [
       {
-        "id": "alarm_status_false",
         "title": {
           "en": "Battery mode just deactivated",
           "sv": "Batteridriftsläge har avaktiverats"
@@ -75,10 +74,10 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ]
+        ],
+        "id": "alarm_status_false"
       },
       {
-        "id": "alarm_status_true",
         "title": {
           "en": "Battery mode just activated",
           "sv": "Batteridriftsläge har aktiverats"
@@ -96,68 +95,150 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ]
+        ],
+        "id": "alarm_status_true"
       },
       {
-        "id": "battery_runtime_bigger_than",
         "title": {
-          "en": "Battery runtime is bigger than..",
-          "sv": "Batteridriftstid är större än.."
-        },
-        "titleFormatted": {
-          "en": "Battery runtime is bigger than [[value]]s",
-          "sv": "Batteridriftstid är större än [[value]]s"
+          "en": "Battery runtime has changed",
+          "sv": "Batteridriftstiden har ändrats"
         },
         "hint": {
-          "en": "This flowcard triggers when the battery runtime is bigger than set value.",
+          "en": "This flowcard triggers when the battery runtime has changed.",
+          "sv": "Det här flödeskortet triggas när batteridriftstiden har ändrats."
+        },
+        "platforms": [
+          "local"
+        ],
+        "tokens": [
+          {
+            "name": "battery_runtime",
+            "type": "number",
+            "title": {
+              "en": "Battery runtime seconds",
+              "sv": "Batteridriftstid sekunder"
+            },
+            "example": 120
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+          }
+        ],
+        "id": "battery_runtime_changed"
+      },
+      {
+        "title": {
+          "en": "Battery runtime becomes greater than..",
+          "sv": "Batteridriftstid blir större än.."
+        },
+        "titleFormatted": {
+          "en": "Battery runtime becomes greater than [[battery_runtime]] seconds",
+          "sv": "Batteridriftstid blir större än [[battery_runtime]] sekunder"
+        },
+        "hint": {
+          "en": "This flowcard triggers when the battery runtime is greater than set value.",
           "sv": "Det här flödeskortet triggas när batteridriftstiden är större än satt värde."
         },
         "platforms": [
           "local"
         ],
+        "tokens": [
+          {
+            "name": "battery_runtime",
+            "type": "number",
+            "title": {
+              "en": "Battery runtime seconds",
+              "sv": "Batteridriftstid sekunder"
+            },
+            "units": {
+              "en": "seconds",
+              "sv": "sekunder"
+            },
+            "example": 120
+          }
+        ],
         "args": [
           {
-            "name": "value",
-            "type": "number"
+            "type": "number",
+            "name": "battery_runtime",
+            "min": 0,
+            "step": 1,
+            "placeholder": {
+              "en": "Set a value",
+              "sv": "Sätt ett värde"
+            },
+            "title": {
+              "en": "Battery runtime seconds",
+              "sv": "Batteridriftstid sekunder"
+            }
           },
           {
             "type": "device",
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ]
+        ],
+        "id": "battery_runtime_is_greater"
       },
       {
-        "id": "battery_runtime_lower_than",
         "title": {
-          "en": "Battery runtime is lower than..",
-          "sv": "Batteridriftstid är mindre än.."
+          "en": "Battery runtime becomes less than..",
+          "sv": "Batteridriftstid blir mindre än.."
         },
         "titleFormatted": {
-          "en": "Battery runtime is lower than [[value]]s",
-          "sv": "Batteridriftstid är mindre än [[value]]s"
+          "en": "Battery runtime becomes less than [[battery_runtime]] seconds",
+          "sv": "Batteridriftstid blir mindre än [[battery_runtime]] sekunder"
         },
         "hint": {
-          "en": "This flowcard triggers when the battery runtime is lower than set value.",
+          "en": "This flowcard triggers when the battery runtime is less than set value.",
           "sv": "Det här flödeskortet triggas när batteridriftstiden är mindre än satt värde."
         },
         "platforms": [
           "local"
         ],
+        "tokens": [
+          {
+            "name": "battery_runtime",
+            "type": "number",
+            "title": {
+              "en": "Battery runtime seconds",
+              "sv": "Batteridriftstid sekunder"
+            },
+            "units": {
+              "en": "seconds",
+              "sv": "sekunder"
+            },
+            "example": 120
+          }
+        ],
         "args": [
           {
-            "name": "value",
-            "type": "number"
+            "type": "number",
+            "name": "battery_runtime",
+            "min": 0,
+            "step": 1,
+            "placeholder": {
+              "en": "Set a value",
+              "sv": "Sätt ett värde"
+            },
+            "title": {
+              "en": "Battery runtime seconds",
+              "sv": "Batteridriftstid sekunder"
+            }
           },
           {
             "type": "device",
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ]
+        ],
+        "id": "battery_runtime_is_less"
       },
       {
-        "id": "status_changed",
         "title": {
           "en": "Status has changed",
           "sv": "Status har ändrats"
@@ -175,7 +256,8 @@
             "name": "device",
             "filter": "driver_id=ups"
           }
-        ]
+        ],
+        "id": "status_changed"
       }
     ]
   },
