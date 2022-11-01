@@ -12,7 +12,7 @@
   ],
   "tokens": [
     {
-        "name": "battery_runtime",
+        "name": "measure_battery_runtime",
         "type": "number",
         "title": {
             "en": "Battery runtime seconds",

@@ -1,0 +1,35 @@
+{
+    "title": {
+        "en": "Battery runtime is !{{less|greater}} than",
+        "sv": "Batteridriftstid är !{{mindre|mer}} än"
+    },
+    "hint": {
+        "en": "This Flow will continue if the battery runtime is/is not less than the set value.",
+        "sv": "Det här flödet fortsätter om batteridriftstiden är/inte är mindre än det satta värded."
+    },
+    "titleFormatted": {
+        "en": "The battery runtime is !{{less|greater}} than [[measure_battery_runtime]] seconds",
+        "sv": "Batteridriftstiden är !{{mindre|mer}} än [[measure_battery_runtime]] sekunder."
+    },
+    "args": [
+        {
+            "type": "number",
+            "name": "measure_battery_runtime",
+            "min": 0,
+            "step": 1,
+            "placeholder": {
+                "en": "Set a value",
+                "sv": "Sätt ett värde"
+            },
+            "title": {
+                "en": "Battery runtime seconds",
+                "sv": "Batteridriftstid sekunder"
+            }
+        },
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+        }
+    ]
+}
