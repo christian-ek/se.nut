@@ -1,0 +1,35 @@
+{
+    "title": {
+        "en": "Battery runtime is !{{equal|not equal}} to",
+        "sv": "Batteridriftstid är !{{lika|inte lika}} med"
+    },
+    "hint": {
+        "en": "This Flow will continue if the battery runtime is/is not equal to the set value.",
+        "sv": "Det här flödet fortsätter om batteridriftstiden är lika/inte lika med det satta värded."
+    },
+    "titleFormatted": {
+        "en": "The battery runtime is !{{equal|not equal}} to [[measure_battery_runtime]] seconds",
+        "sv": "Batteridriftstiden är !{{lika|inte lika}} med [[measure_battery_runtime]] sekunder."
+    },
+    "args": [
+        {
+            "type": "number",
+            "name": "measure_battery_runtime",
+            "min": 0,
+            "step": 1,
+            "placeholder": {
+                "en": "Set a value",
+                "sv": "Sätt ett värde"
+            },
+            "title": {
+                "en": "Battery runtime seconds",
+                "sv": "Batteridriftstid sekunder"
+            }
+        },
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+        }
+    ]
+}

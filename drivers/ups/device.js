@@ -70,13 +70,13 @@ class UPSDevice extends Device {
     this.setCapabilityValue('alarm_status', status.alarm_status)
       .catch(this.error);
 
-    this.setCapabilityValue('voltage.input', status.input_voltage)
+    this.setCapabilityValue('measure_voltage.input', status.input_voltage)
       .catch(this.error);
 
-    this.setCapabilityValue('voltage.output', status.output_voltage)
+    this.setCapabilityValue('measure_voltage.output', status.output_voltage)
       .catch(this.error);
 
-    this.setCapabilityValue('battery_runtime', status.battery_runtime)
+    this.setCapabilityValue('measure_battery_runtime', status.battery_runtime)
       .catch(this.error);
 
     this.setCapabilityValue('status', status.status_readable)
