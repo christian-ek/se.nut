@@ -1,8 +1,0 @@
-{
-  "settings": {
-    "ipLabel": "IP",
-    "portLabel": "Port",
-    "saveButton": "Save changes",
-    "savedText": "Settings saved!"
-  }
-}
