@@ -325,19 +325,6 @@
             },
             {
               "id": "username",
-              "type": "password",
-              "label": {
-                "en": "Password",
-                "sv": "Lösenord"
-              },
-              "hint": {
-                "en": "Password to NUT server.",
-                "sv": "Lösenord till NUT servern."
-              },
-              "value": "-"
-            },
-            {
-              "id": "password",
               "type": "text",
               "label": {
                 "en": "Username",
@@ -346,6 +333,19 @@
               "hint": {
                 "en": "Username to NUT server.",
                 "sv": "Användarnamn till NUT servern."
+              },
+              "value": "-"
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "label": {
+                "en": "Password",
+                "sv": "Lösenord"
+              },
+              "hint": {
+                "en": "Password to NUT server.",
+                "sv": "Lösenord till NUT servern."
               },
               "value": "-"
             },
