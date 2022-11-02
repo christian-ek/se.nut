@@ -32,6 +32,7 @@
       <div>
         <button @click="connect" type="button" class="btn btn-outline-dark float-end hy-nostyle" style="height: auto;">Connect</button>
       </div>
+
     </div>
   </div>
 
@@ -78,11 +79,11 @@
               Homey.alert(err);
             } else {
               if (res) {
-                this.data.ip = res.ip;
-                this.data.port = res.port;
-                this.data.interval = Number(res.interval);
-                this.data.username = res.username;
-                this.data.password = res.password;
+                this.data.ip = res.ip || '';
+                this.data.port = res.port || 3493;
+                this.data.interval = res.interval || 30;
+                this.data.username = res.username || '';
+                this.data.password = res.password || '';
               }
             }
           });
