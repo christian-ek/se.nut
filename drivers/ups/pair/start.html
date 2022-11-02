@@ -1,90 +1,101 @@
-<script src="../../../assets/vue.min.js"></script>
-<link rel="stylesheet" href="../../../assets/bootstrap.min.css" />
+<!DOCTYPE html>
+<html>
 
-<script>
-  Homey.setTitle("Add Network UPS Tool (NUT) IP and Port");
+<head>
+  <meta charset="UTF-8" />
+  <script src="../../../assets/vue.min.js"></script>
+  <link rel="stylesheet" href="../../../assets/bootstrap.min.css" />
+</head>
 
-  Homey.emit('getSettings', {}, (err, data) => {
-    if (err) {
-      Homey.alert(err);
-    } else {
-      if (data) {
-        document.getElementById(`gatewayIP`).value = data.ip;
-        document.getElementById(`gatewayPort`).value = data.port;
-        document.getElementById(`gatewayUpdateTime`).value = data.interval;
-        document.getElementById(`gatewayUsername`).username = data.username;
-        document.getElementById(`gatewayPassword`).password = data.password;
-      }
-    }
-  });
-
-  new Vue({
-    el: "#addNUT",
-    methods: {
-      connect() {
-        Homey.showLoadingOverlay();
-
-        let alert = document.getElementById(`status`);
-        let alertTitle = document.getElementsByClassName(`statusAlertShow`);
-        let listDevices = document.getElementById("listDevices");
-        let gatewayIP = document.getElementById(`gatewayIP`);
-        let gatewayPort = document.getElementById(`gatewayPort`);
-        let gatewayUpdateTime = document.getElementById(`gatewayUpdateTime`);
-        let gatewayUsername = document.getElementById(`gatewayUsername`);
-        let gatewayPassword = document.getElementById(`gatewayPassword`);
-
-        let data = {
-          ip: gatewayIP.value,
-          port: gatewayPort.value,
-          interval: Number(gatewayUpdateTime.value || 30),
-          username: gatewayUsername.value,
-          password: gatewayPassword.value
-        };
-
-        Homey.emit("connect", data, (error) => {
-          Homey.hideLoadingOverlay();
-          if (error) {
-            alert.classList.remove("alert-light");
-            alert.classList.remove("alert-warning");
-            alert.classList.add("alert-danger");
-            alertTitle[0].innerHTML = "Error: "+ error.message;
-            listDevices.style.setProperty("display", "none");
-          } else {
-            alert.classList.remove("alert-light");
-            alert.classList.remove("alert-danger");
-            alert.classList.remove("alert-warning");
-            alert.classList.add("alert-success");
-            alertTitle[0].innerHTML = "Successfully connected!";
-            listDevices.style.removeProperty("display");
-          }
-
-        });
-      },
-      goNextView() {
-        Homey.nextView();
-      }
-    }
-  });
-</script>
-
-<div id="addNUT">
-    <div class="row align-items-center alert alert-light" role="alert" id="status" style="width: 100%; margin-left: 0px; margin-right: 0px;">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" id="gatewayIP" aria-describedby="basic-addon3" placeholder="IP Address" style="border: 1px solid #ced4da; padding: 0.375rem 0.75rem;" />
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" value="3493" id="gatewayPort" aria-describedby="basic-addon3" placeholder="Port" style="border: 1px solid #ced4da; padding: 0.375rem 0.75rem;" />
-        </div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" id="gatewayUsername" aria-describedby="basic-addon3" placeholder="Username" style="border: 1px solid #ced4da; padding: 0.375rem 0.75rem;" />
-        </div>
-        <div class="input-group mb-3">
-            <input type="password" class="form-control" id="gatewayPassword" aria-describedby="basic-addon3" placeholder="Password" style="border: 1px solid #ced4da; padding: 0.375rem 0.75rem;" />
-        </div>
-        <div class="input-group mb-3"><small id="period" class="form-text text-muted">Polling period, seconds</small></div>
-        <div class="input-group mb-3"><input type="number" class="form-control" id="gatewayUpdateTime" aria-describedby="basic-addon3" placeholder="30" min="10" max="3600" /></div>
-        <div class="col" style="padding-left: 0px;"><div class="statusAlertShow float-left">Not connected!</div></div>
-        <div class="col" style="padding-right: 0px;"><button @click="connect" type="button" class="btn btn-primary float-right" id="connectBtn" style="height: auto;">Connect</button></div>
+<body>
+  <div id="start">
+    <div class="row align-items-center alert alert-light" role="alert" id="status"
+      style="width: 100%; margin-left: 0px; margin-right: 0px;">
+      <div class="input-group mb-3">
+        <input v-model="data.ip" type="text" class="form-control hy-nostyle" placeholder="IP Address" />
+      </div>
+      <div class="input-group mb-3">
+        <input v-model="data.port" type="text" class="form-control hy-nostyle" placeholder="Port" />
+      </div>
+      <div class="input-group mb-3">
+        <input v-model="data.username" type="text" class="form-control hy-nostyle" placeholder="Username" />
+      </div>
+      <div class="input-group mb-3">
+        <input v-model="data.password" type="password" class="form-control hy-nostyle" placeholder="Password" />
+      </div>
+      <div class="input-group mb-3">
+        <small class="form-text text-muted">Polling period, seconds</small>
+      </div>
+      <div class="input-group mb-3">
+        <input v-model="data.interval" type="number" class="form-control hy-nostyle" placeholder="30" min="10" max="3600" />
+      </div>
+      <div>
+        <button @click="connect" type="button" class="btn btn-outline-dark float-end hy-nostyle" style="height: auto;">Connect</button>
+      </div>
     </div>
-    <button @click="goNextView" type="button" class="btn btn-primary btn-lg btn-block" style="height: auto; display: none;" id="listDevices">List devices</button>
-</div>
+  </div>
+
+  <script>
+    Homey.setTitle("Add Network UPS Tool (NUT) IP and Port");
+
+    new Vue({
+      el: "#start",
+      data: function () {
+        return {
+          data: {
+            ip: '',
+            port: 3493,
+            username: '',
+            password: '',
+            interval: 30
+          }
+        }
+      },
+      methods: {
+        connect() {
+          Homey.showLoadingOverlay();
+
+          let alert = document.getElementById(`status`);
+          let alertTitle = document.getElementsByClassName(`statusAlertShow`);
+          let listDevices = document.getElementById("listDevices");
+
+          Homey.emit("connect", this.data, (error) => {
+            Homey.hideLoadingOverlay();
+            if (error) {
+              alert.classList.remove("alert-light");
+              alert.classList.remove("alert-warning");
+              alert.classList.add("alert-danger");
+              alertTitle[0].innerHTML = "Error: " + error.message;
+              listDevices.style.setProperty("display", "none");
+            } else {
+              Homey.nextView();
+            }
+          });
+        },
+        getSettings() {
+          Homey.emit('getSettings', {}, (err, res) => {
+            if (err) {
+              Homey.alert(err);
+            } else {
+              if (res) {
+                this.data.ip = res.ip;
+                this.data.port = res.port;
+                this.data.interval = Number(res.interval);
+                this.data.username = res.username;
+                this.data.password = res.password;
+              }
+            }
+          });
+        },
+        goNextView() {
+          Homey.nextView();
+        }
+      },
+      beforeMount() {
+        this.getSettings()
+      },
+    });
+  </script>
+</body>
+
+</html>
