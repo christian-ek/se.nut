@@ -52,7 +52,10 @@ class UPSDriver extends Driver {
             }
           })
           .then(() => this.saveSettings(data))
-          .catch((err) => this.log(err));
+          .catch((err) => this.log(err))
+          .finally(() => {
+            this.nut.close();
+          });
       } catch (err) {
         this.log(`There was an error: ${err.message}`);
       }
