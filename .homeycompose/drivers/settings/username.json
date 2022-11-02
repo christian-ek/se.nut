@@ -1,12 +1,12 @@
 {
-  "type": "password",
+  "type": "text",
   "label": {
-    "en": "Password",
-    "sv": "Lösenord"
+    "en": "Username",
+    "sv": "Användarnamn"
   },
   "hint": {
-    "en": "Password to NUT server.",
-    "sv": "Lösenord till NUT servern."
+    "en": "Username to NUT server.",
+    "sv": "Användarnamn till NUT servern."
   },
   "value": "-"
 }
