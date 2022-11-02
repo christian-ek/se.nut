@@ -30,13 +30,19 @@ class UPSDevice extends Device {
     const { device } = this;
     this.log(`[${this.getName()}][${device.id}]`, 'Refresh device');
 
-    await this.nut.GetUPSVars(device.name)
+    await this.nut.start()
+      .then(() => this.nut.SetUsername(this.getSetting.username))
+      .then(() => this.nut.SetPassword(this.getSetting.password))
+      .then(() => this.nut.GetUPSVars(device.name))
       .then((res) => parseUPSStatus(res))
       .then((res) => {
         this.setCapabilities(res);
         this.log(res);
       })
-      .catch((err) => this.log(err));
+      .catch((err) => this.log(err))
+      .finally(() => {
+        this.nut.close();
+      });
   }
 
   initNut() {
@@ -47,17 +53,8 @@ class UPSDevice extends Device {
     });
 
     this.nut.on('close', () => {
-      this.log('Connection closed. Starting again..');
-      this.nut.start()
-        .then(() => this.nut.SetUsername(this.getSetting.username))
-        .then(() => this.nut.SetPassword(this.getSetting.password))
-        .catch((err) => this.log(err));
+      this.log('Connection closed.');
     });
-
-    this.nut.start()
-      .then(() => this.nut.SetUsername(this.getSetting.username))
-      .then(() => this.nut.SetPassword(this.getSetting.password))
-      .catch((err) => this.log(err));
   }
 
   setCapabilities(status) {
