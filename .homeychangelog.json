@@ -16,5 +16,8 @@
   },
   "1.0.5": {
     "en": "Rewrote custom pairing"
+  },
+  "1.0.6": {
+    "en": "Add app store source code link"
   }
 }
