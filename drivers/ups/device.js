@@ -34,7 +34,10 @@ class UPSDevice extends Device {
       .then(() => this.nut.SetUsername(this.getSetting.username))
       .then(() => this.nut.SetPassword(this.getSetting.password))
       .then(() => this.nut.GetUPSVars(device.name))
-      .then((res) => parseUPSStatus(res))
+      .then((res) => {
+        this.log(res);
+        parseUPSStatus(res);
+      })
       .then((res) => {
         this.setCapabilities(res);
         this.log(res);
