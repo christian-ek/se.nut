@@ -36,11 +36,11 @@ class UPSDevice extends Device {
       .then(() => this.nut.GetUPSVars(device.name))
       .then((res) => {
         this.log(res);
-        parseUPSStatus(res);
+        return parseUPSStatus(res);
       })
       .then((res) => {
-        this.setCapabilities(res);
         this.log(res);
+        this.setCapabilities(res);
       })
       .catch((err) => this.log(err))
       .finally(() => {
