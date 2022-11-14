@@ -34,5 +34,8 @@
   },
   "1.1.1": {
     "en": "Squashed a bug."
+  },
+  "1.1.2": {
+    "en": "Remove capabilities that is not supported by device (re-add device for this to be used)"
   }
 }
