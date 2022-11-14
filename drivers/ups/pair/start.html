@@ -30,7 +30,12 @@
         <input v-model="data.interval" type="number" class="form-control hy-nostyle" placeholder="30" min="10" max="3600" />
       </div>
       <div>
-        <button @click="connect" type="button" class="btn btn-outline-dark float-end hy-nostyle" style="height: auto;">Connect</button>
+        <div class="col">
+          <div class="float-start">{{error}}</div>
+        </div>
+        <div class="col">
+          <button @click="connect" type="button" class="btn btn-outline-dark float-end hy-nostyle" style="height: auto;">Connect</button>
+        </div>
       </div>
 
     </div>
@@ -49,7 +54,8 @@
             username: '',
             password: '',
             interval: 30
-          }
+          },
+          error: ''
         }
       },
       methods: {
@@ -57,17 +63,13 @@
           Homey.showLoadingOverlay();
 
           let alert = document.getElementById(`status`);
-          let alertTitle = document.getElementsByClassName(`statusAlertShow`);
-          let listDevices = document.getElementById("listDevices");
 
           Homey.emit("connect", this.data, (error) => {
             Homey.hideLoadingOverlay();
             if (error) {
               alert.classList.remove("alert-light");
-              alert.classList.remove("alert-warning");
               alert.classList.add("alert-danger");
-              alertTitle[0].innerHTML = "Error: " + error.message;
-              listDevices.style.setProperty("display", "none");
+              this.error = "Error: " + error.message;
             } else {
               Homey.nextView();
             }
@@ -87,9 +89,6 @@
               }
             }
           });
-        },
-        goNextView() {
-          Homey.nextView();
         }
       },
       beforeMount() {

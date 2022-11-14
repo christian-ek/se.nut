@@ -86,10 +86,10 @@ class UPSDriver extends Driver {
 
       const status = parseUPSStatus(result);
       device = {
-        name: status.name,
+        name: status.values.name,
         data: {
           name,
-          id: status.id,
+          id: status.values.id,
         },
         settings: {
           ip: settings.ip,
@@ -97,6 +97,10 @@ class UPSDriver extends Driver {
           interval: settings.interval,
           username: settings.username,
           password: settings.password,
+        },
+        store: {
+          capabilities: status.capabilities,
+          first_run: true,
         },
       };
     }

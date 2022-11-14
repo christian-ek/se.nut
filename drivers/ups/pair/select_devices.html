@@ -11,18 +11,15 @@
   <div id="selectDevices">
     <div class="d-flex gap-5 justify-content-center">
       <div class="list-group mx-0 w-100" v-if="devices.length > 0">
-        <span v-for="device in devices">
-          <label class="list-group-item d-flex gap-2 hy-nostyle">
-            <input class="form-check-input flex-shrink-0 hy-nostyle" type="checkbox" :value="device"
-              v-model="selectedDevices">
-            <span>
-              {{ device.name }}
-              <small class="d-block text-muted">Serial number: {{ device.data.id }}</small>
-            </span>
-          </label>
-        </span>
+        <label class="list-group-item hy-nostyle" v-for="device in devices">
+          <input class="form-check-input me-1 hy-nostyle" type="checkbox" :value="device" v-model="selectedDevices">
+          <span>
+            {{ device.name }}
+            <small class="d-block text-muted">Serial number: {{ device.data.id }}</small>
+          </span>
+        </label>
         <div class="mt-3">
-          <button @click="createDevices" type="button" class="btn btn-outline-dark float-end hy-nostyle"
+          <button @click="createDevices" :disabled="selectDevices.length === 0" type="button" class="btn btn-outline-dark float-end hy-nostyle"
           style="height: auto;">Add devices</button>
         </div>
       </div>
@@ -57,13 +54,17 @@
           });
         },
         createDevices() {
-          this.selectedDevices.forEach(device => {
+          if (this.selectedDevices.length === 0) {
+            Homey.alert("Select devices first...");
+          } else {
+            this.selectedDevices.forEach(device => {
             Homey.createDevice(device)
               .catch(function (error) {
                 Homey.alert(err);
               })
-          })
-          Homey.done();
+            })
+            Homey.done();
+          }
         }
       },
       beforeMount() {

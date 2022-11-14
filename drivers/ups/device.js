@@ -61,25 +61,40 @@ class UPSDevice extends Device {
   }
 
   setCapabilities(status) {
-    this.setCapabilityValue('measure_battery', status.battery)
-      .catch(this.error);
+    const firstRun = this.getStoreValue('first_run');
+    const deviceCapabilities = this.getStoreValue('capabilities');
 
-    this.setCapabilityValue('measure_temperature', status.battery_temperature)
-      .catch(this.error);
+    if (firstRun != null && firstRun) {
+      /*
+      * Go through all capabilities on the driver and remove those not supported by device.
+      */
+      this.log('Running setCapabilities for the first time');
+      const allCapabilities = this.getCapabilities();
+      allCapabilities.forEach((capability) => {
+        if (!deviceCapabilities.includes(capability)) {
+          this.removeCapability(capability);
+          this.log(`Removing capability not supported by device [${capability}]`);
+        }
+      });
+      this.setStoreValue('first_run', false);
+    }
 
-    this.setCapabilityValue('alarm_status', status.alarm_status)
-      .catch(this.error);
+    const capabilityList = deviceCapabilities == null ? status.capabilities : deviceCapabilities;
+    capabilityList.forEach((capability) => {
+      const isSubCapability = capability.split('.').length > 1;
+      if (isSubCapability) {
+        const capabilityName = capability.split('.')[0];
+        const subCapabilityName = capability.split('.').pop();
+        this.updateValue(`${[capabilityName]}.${[subCapabilityName]}`, status.values[capabilityName][subCapabilityName]);
+      } else {
+        this.updateValue(capability, status.values[capability]);
+      }
+    });
+  }
 
-    this.setCapabilityValue('measure_voltage.input', status.input_voltage)
-      .catch(this.error);
-
-    this.setCapabilityValue('measure_voltage.output', status.output_voltage)
-      .catch(this.error);
-
-    this.setCapabilityValue('measure_battery_runtime', status.battery_runtime)
-      .catch(this.error);
-
-    this.setCapabilityValue('status', status.status_readable)
+  updateValue(capability, value) {
+    this.log(`Setting capability [${capability}] value to: ${value}`);
+    this.setCapabilityValue(capability, value)
       .catch(this.error);
   }
 
@@ -91,6 +106,7 @@ class UPSDevice extends Device {
     this.log('name:', this.getName());
     this.log('class:', this.getClass());
     this.log('data', this.getData());
+    this.log('capabilities', this.getStoreValue('capabilities'));
   }
 
   /**
