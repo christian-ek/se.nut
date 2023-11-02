@@ -40,5 +40,8 @@
   },
   "1.1.3": {
     "en": "Switch to using the builtin select devices pairing view"
+  },
+  "1.1.4": {
+    "en": "Update contact information"
   }
 }
