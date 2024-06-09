@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Battery",
+    "sv": "Batteri"
+  },
+  "icon": "/assets/icons/battery-level.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": "%",
+    "sv": "%"
+  },
+  "min": 0,
+  "max": 100,
+  "step": 1
+}

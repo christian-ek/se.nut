@@ -4,12 +4,16 @@
   },
   "capabilities": [
     "measure_battery",
+    "battery",
     "alarm_status",
     "status",
     "measure_voltage.input",
     "measure_voltage.output",
+    "measure_voltage.battery",
     "measure_temperature",
-    "measure_battery_runtime"
+    "measure_battery_runtime",
+    "measure_load",
+    "measure_power"
   ],
   "capabilitiesOptions": {
     "measure_temperature": {
@@ -29,6 +33,12 @@
       "title": {
         "en": "Voltage output",
         "sv": "Utgångsspänning"
+      }
+    },
+    "measure_voltage.battery": {
+      "title": {
+        "en": "Voltage Battery",
+        "sv": "Batterispänning"
       }
     }
   },

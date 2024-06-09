@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Power",
+    "sv": "Effekt"
+  },
+  "icon": "/assets/icons/voltage.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": "W",
+    "sv": "W"
+  }
+}
