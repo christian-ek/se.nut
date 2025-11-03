@@ -13,7 +13,8 @@
     "measure_temperature",
     "measure_battery_runtime",
     "measure_load",
-    "measure_power"
+    "measure_power",
+    "measure_power_factor"
   ],
   "capabilitiesOptions": {
     "measure_temperature": {
@@ -51,6 +52,12 @@
       "title": {
         "en": "Load",
         "sv": "Belastning"
+      }
+    },
+    "measure_power_factor": {
+      "title": {
+        "en": "Power factor",
+        "sv": "Effektfaktor"
       }
     }
   },
