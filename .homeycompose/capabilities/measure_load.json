@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Load",
+    "sv": "Belastning"
+  },
+  "icon": "/assets/icons/voltage.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": "%",
+    "sv": "%"
+  },
+  "min": 0,
+  "max": 100,
+  "step": 0.1
+}

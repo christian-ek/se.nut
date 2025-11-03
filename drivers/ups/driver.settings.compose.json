@@ -22,5 +22,19 @@
         "$extends": "interval"
       }
     ]
+  },
+  {
+    "id": "watt_nominal",
+    "type": "number",
+    "label": {
+      "en": "Nominal Wattage",
+      "sv": "Nominell effekt"
+    },
+    "hint": {
+      "en": "The nominal wattage of the UPS. Used for calculating output power.",
+      "sv": "Den nominella effekten för UPS. Används för att beräkna utgångseffekt."
+    },
+    "value": 1000,
+    "required": true
   }
 ]
