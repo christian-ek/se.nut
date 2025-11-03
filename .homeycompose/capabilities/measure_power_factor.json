@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Power factor",
+    "sv": "Effektfaktor"
+  },
+  "icon": "/assets/icons/voltage.svg",
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "",
+    "sv": ""
+  },
+  "min": 0,
+  "max": 1,
+  "step": 0.01,
+  "decimals": 2
+}
