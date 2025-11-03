@@ -134,27 +134,6 @@
       },
       {
         "title": {
-          "en": "Load has changed",
-          "sv": "Belastning har ändrats"
-        },
-        "hint": {
-          "en": "This flowcard triggers when the load has changed.",
-          "sv": "Det här flödeskortet triggas när belastningen har ändrats."
-        },
-        "platforms": [
-          "local"
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=ups"
-          }
-        ],
-        "id": "load_changed"
-      },
-      {
-        "title": {
           "en": "Status has changed",
           "sv": "Status har ändrats"
         },
@@ -491,7 +470,7 @@
       },
       "min": 0,
       "max": 100,
-      "step": 0.1
+      "step": 1
     },
     "measure_voltage": {
       "type": "number",
