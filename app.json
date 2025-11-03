@@ -464,6 +464,7 @@
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
+      "insights": true,
       "units": {
         "en": "%",
         "sv": "%"
