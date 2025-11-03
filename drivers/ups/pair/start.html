@@ -29,6 +29,12 @@
       <div class="input-group mb-3">
         <input v-model="data.interval" type="number" class="form-control hy-nostyle" placeholder="30" min="10" max="3600" />
       </div>
+      <div class="input-group mb-3">
+        <small class="form-text text-muted">UPS Nominal Power (Watt)</small>
+      </div>
+      <div class="input-group mb-3">
+        <input v-model="data.watt_nominal" type="number" class="form-control hy-nostyle" placeholder="e.g. 600" min="1" />
+      </div>
       <div>
         <div class="col">
           <div class="float-start">{{error}}</div>
@@ -53,7 +59,8 @@
             port: 3493,
             username: '',
             password: '',
-            interval: 30
+            interval: 30,
+            watt_nominal: '',
           },
           error: ''
         }
@@ -86,6 +93,7 @@
                 this.data.interval = res.interval || 30;
                 this.data.username = res.username || '';
                 this.data.password = res.password || '';
+                this.data.watt_nominal = res.watt_nominal || 1000;
               }
             }
           });

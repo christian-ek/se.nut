@@ -134,6 +134,27 @@
       },
       {
         "title": {
+          "en": "Load has changed",
+          "sv": "Belastning har ändrats"
+        },
+        "hint": {
+          "en": "This flowcard triggers when the load has changed.",
+          "sv": "Det här flödeskortet triggas när belastningen har ändrats."
+        },
+        "platforms": [
+          "local"
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ups"
+          }
+        ],
+        "id": "load_changed"
+      },
+      {
+        "title": {
           "en": "Status has changed",
           "sv": "Status har ändrats"
         },
@@ -251,8 +272,12 @@
         "status",
         "measure_voltage.input",
         "measure_voltage.output",
+        "measure_current.input",
+        "measure_current.output",
         "measure_temperature",
-        "measure_battery_runtime"
+        "measure_battery_runtime",
+        "measure_load",
+        "measure_power"
       ],
       "capabilitiesOptions": {
         "measure_temperature": {
@@ -272,6 +297,24 @@
           "title": {
             "en": "Voltage output",
             "sv": "Utgångsspänning"
+          }
+        },
+        "measure_current.input": {
+          "title": {
+            "en": "Current input",
+            "sv": "Ingångsström"
+          }
+        },
+        "measure_current.output": {
+          "title": {
+            "en": "Current output",
+            "sv": "Utgångsström"
+          }
+        },
+        "measure_load": {
+          "title": {
+            "en": "Load",
+            "sv": "Belastning"
           }
         }
       },
@@ -379,6 +422,20 @@
               }
             }
           ]
+        },
+        {
+          "id": "watt_nominal",
+          "type": "number",
+          "label": {
+            "en": "Nominal Wattage",
+            "sv": "Nominell effekt"
+          },
+          "hint": {
+            "en": "The nominal wattage of the UPS. Used for calculating output power.",
+            "sv": "Den nominella effekten för UPS. Används för att beräkna utgångseffekt."
+          },
+          "value": 1000,
+          "required": true
         }
       ]
     }
@@ -417,6 +474,24 @@
         "en": "seconds",
         "sv": "sekunder"
       }
+    },
+    "measure_load": {
+      "type": "number",
+      "title": {
+        "en": "Load",
+        "sv": "Belastning"
+      },
+      "icon": "/assets/icons/voltage.svg",
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "%",
+        "sv": "%"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 0.1
     },
     "measure_voltage": {
       "type": "number",

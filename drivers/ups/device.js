@@ -36,7 +36,7 @@ class UPSDevice extends Device {
       .then(() => this.nut.GetUPSVars(device.name))
       .then((res) => {
         this.log(res);
-        return parseUPSStatus(res);
+        return parseUPSStatus(res, this.getSetting('watt_nominal'));
       })
       .then((res) => {
         this.log(res);
@@ -82,6 +82,7 @@ class UPSDevice extends Device {
     const capabilityList = deviceCapabilities == null ? status.capabilities : deviceCapabilities;
     capabilityList.forEach((capability) => {
       const isSubCapability = capability.split('.').length > 1;
+      this.log(`Updating capability [${capability}]`);
       if (isSubCapability) {
         const capabilityName = capability.split('.')[0];
         const subCapabilityName = capability.split('.').pop();
