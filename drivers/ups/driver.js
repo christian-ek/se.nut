@@ -88,7 +88,7 @@ class UPSDriver extends Driver {
     if (result) {
       this.log('Response:', result);
 
-      const status = parseUPSStatus(result, settings.watt_nominal);
+      const status = parseUPSStatus(result, settings.estimate_power, settings.watt_nominal);
       device = {
         name: status.values.name,
         data: {

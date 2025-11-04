@@ -46,7 +46,7 @@
           "en": "Only used when 'Estimate power usage' is enabled.",
           "sv": "Används endast när 'Beräkna effekt' är aktiverat."
         },
-        "value": 1000,
+        "value": 500,
         "min": 1,
         "required": false
       }
