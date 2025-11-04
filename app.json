@@ -410,18 +410,42 @@
           ]
         },
         {
-          "id": "watt_nominal",
-          "type": "number",
+          "type": "group",
           "label": {
-            "en": "Nominal Wattage",
-            "sv": "Nominell effekt"
+            "en": "Power",
+            "sv": "Effekt"
           },
-          "hint": {
-            "en": "The nominal wattage of the UPS. Used for calculating output power.",
-            "sv": "Den nominella effekten för UPS. Används för att beräkna utgångseffekt."
-          },
-          "value": 1000,
-          "required": true
+          "children": [
+            {
+              "id": "estimate_power",
+              "type": "checkbox",
+              "label": {
+                "en": "Estimate power usage",
+                "sv": "Beräkna effekt"
+              },
+              "value": false,
+              "hint": {
+                "en": "Enable this to estimate output power from UPS nominal wattage.",
+                "sv": "Aktivera för att beräkna utgångseffekt från UPS nominella effekt."
+              },
+              "highlight": true
+            },
+            {
+              "id": "watt_nominal",
+              "type": "number",
+              "label": {
+                "en": "Nominal Wattage",
+                "sv": "Nominell effekt"
+              },
+              "hint": {
+                "en": "Only used when 'Estimate power usage' is enabled.",
+                "sv": "Används endast när 'Beräkna effekt' är aktiverat."
+              },
+              "value": 500,
+              "min": 1,
+              "required": false
+            }
+          ]
         }
       ]
     }
