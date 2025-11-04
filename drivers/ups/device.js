@@ -36,7 +36,8 @@ class UPSDevice extends Device {
       .then(() => this.nut.GetUPSVars(device.name))
       .then((res) => {
         this.log(res);
-        return parseUPSStatus(res, this.getSetting('watt_nominal'));
+        watt_nominal = this.getSetting('estimate_power') === true ? this.getSetting('watt_nominal') : null
+        return parseUPSStatus(res, watt_nominal);
       })
       .then((res) => {
         this.log(res);
