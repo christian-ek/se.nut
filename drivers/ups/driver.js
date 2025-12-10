@@ -19,6 +19,8 @@ class UPSDriver extends Driver {
         interval: this.homey.settings.get('interval'),
         username: this.homey.settings.get('username'),
         password: this.homey.settings.get('password'),
+        estimate_power: this.homey.settings.get('estimate_power'),
+        watt_nominal: this.homey.settings.get('watt_nominal'),
       };
     });
 
@@ -72,6 +74,8 @@ class UPSDriver extends Driver {
     this.homey.settings.set('interval', data.interval);
     this.homey.settings.set('username', data.username);
     this.homey.settings.set('password', data.password);
+    this.homey.settings.set('estimate_power', data.estimate_power);
+    this.homey.settings.set('watt_nominal', data.watt_nominal);
   }
 
   async getDeviceData(name, settings) {
@@ -84,7 +88,7 @@ class UPSDriver extends Driver {
     if (result) {
       this.log('Response:', result);
 
-      const status = parseUPSStatus(result);
+      const status = parseUPSStatus(result, settings.estimate_power, settings.watt_nominal);
       device = {
         name: status.values.name,
         data: {
@@ -97,6 +101,8 @@ class UPSDriver extends Driver {
           interval: settings.interval,
           username: settings.username,
           password: settings.password,
+          estimate_power: settings.estimate_power,
+          watt_nominal: settings.watt_nominal,
         },
         store: {
           capabilities: status.capabilities,
