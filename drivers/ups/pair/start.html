@@ -23,21 +23,37 @@
       <div class="input-group mb-3">
         <input v-model="data.password" type="password" class="form-control hy-nostyle" placeholder="Password" />
       </div>
+
       <div class="input-group mb-3">
         <small class="form-text text-muted">Polling period, seconds</small>
       </div>
       <div class="input-group mb-3">
         <input v-model="data.interval" type="number" class="form-control hy-nostyle" placeholder="30" min="10" max="3600" />
       </div>
-      <div>
-        <div class="col">
-          <div class="float-start">{{error}}</div>
+
+      <!-- Checkbox: toggles watt_nominal visibility -->
+      <div class="form-check mb-3">
+        <input v-model="data.estimate_power" type="checkbox" class="form-check-input" id="estimatePower">
+        <label class="form-check-label" for="estimatePower">Estimate power usage</label>
+      </div>
+
+      <!-- Conditionally visible watt_nominal input -->
+      <div v-if="data.estimate_power">
+        <div class="input-group mb-1">
+          <small class="form-text text-muted">UPS Nominal Power (Watt)</small>
         </div>
-        <div class="col">
-          <button @click="connect" type="button" class="btn btn-outline-dark float-end hy-nostyle" style="height: auto;">Connect</button>
+        <div class="input-group mb-3">
+          <input v-model="data.watt_nominal" type="number" class="form-control hy-nostyle" placeholder="e.g. 600" min="1" />
         </div>
       </div>
 
+      <div class="col">
+        <div class="float-start">{{error}}</div>
+      </div>
+      <div class="col">
+        <button @click="connect" type="button" class="btn btn-outline-dark float-end hy-nostyle"
+          style="height: auto;">Connect</button>
+      </div>
     </div>
   </div>
 
@@ -53,7 +69,9 @@
             port: 3493,
             username: '',
             password: '',
-            interval: 30
+            interval: 30,
+            estimate_power: false,
+            watt_nominal: '',
           },
           error: ''
         }
@@ -61,9 +79,7 @@
       methods: {
         connect() {
           Homey.showLoadingOverlay();
-
           let alert = document.getElementById(`status`);
-
           Homey.emit("connect", this.data, (error) => {
             Homey.hideLoadingOverlay();
             if (error) {
@@ -79,20 +95,20 @@
           Homey.emit('getSettings', {}, (err, res) => {
             if (err) {
               Homey.alert(err);
-            } else {
-              if (res) {
-                this.data.ip = res.ip || '';
-                this.data.port = res.port || 3493;
-                this.data.interval = res.interval || 30;
-                this.data.username = res.username || '';
-                this.data.password = res.password || '';
-              }
+            } else if (res) {
+              this.data.ip = res.ip || '';
+              this.data.port = res.port || 3493;
+              this.data.interval = res.interval || 30;
+              this.data.username = res.username || '';
+              this.data.password = res.password || '';
+              this.data.watt_nominal = res.watt_nominal || 500;
+              this.data.estimate_power = !!res.estimate_power;
             }
           });
         }
       },
       beforeMount() {
-        this.getSettings()
+        this.getSettings();
       },
     });
   </script>

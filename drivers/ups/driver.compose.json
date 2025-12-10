@@ -8,8 +8,13 @@
     "status",
     "measure_voltage.input",
     "measure_voltage.output",
+    "measure_current.input",
+    "measure_current.output",
     "measure_temperature",
-    "measure_battery_runtime"
+    "measure_battery_runtime",
+    "measure_load",
+    "measure_power",
+    "measure_power_factor"
   ],
   "capabilitiesOptions": {
     "measure_temperature": {
@@ -29,6 +34,30 @@
       "title": {
         "en": "Voltage output",
         "sv": "Utgångsspänning"
+      }
+    },
+    "measure_current.input": {
+      "title": {
+        "en": "Current input",
+        "sv": "Ingångsström"
+      }
+    },
+    "measure_current.output": {
+      "title": {
+        "en": "Current output",
+        "sv": "Utgångsström"
+      }
+    },
+    "measure_load": {
+      "title": {
+        "en": "Load",
+        "sv": "Belastning"
+      }
+    },
+    "measure_power_factor": {
+      "title": {
+        "en": "Power factor",
+        "sv": "Effektfaktor"
       }
     }
   },
