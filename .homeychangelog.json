@@ -43,5 +43,8 @@
   },
   "1.1.4": {
     "en": "Update contact information"
+  },
+  "1.1.5": {
+    "en": "UPS Power monitoring support by jinie"
   }
 }
