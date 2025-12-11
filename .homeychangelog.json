@@ -49,5 +49,8 @@
   },
   "1.1.6": {
     "en": "fix import bug"
+  },
+  "1.1.7": {
+    "en": "Patch error handling"
   }
 }
