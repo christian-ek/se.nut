@@ -29,38 +29,65 @@ class UPSDriver extends Driver {
     session.setHandler('connect', async (data) => {
       this.log('Connecting to server');
 
-      try {
-        const settings = data;
+      const settings = data;
 
+      return new Promise((resolve, reject) => {
         this.nut = new Nut(parseInt(settings.port, 10), settings.ip);
 
         this.nut.on('error', (err) => {
           this.log(`There was an error: ${err}`);
+          reject(err);
         });
 
         this.nut.on('close', () => {
           this.log('Connection closed.');
         });
 
-        this.log('Requesting list of active devices..');
+        this.nut.on('ready', () => {
+          this.log('Requesting list of active devices..');
 
-        await this.nut.start()
-          .then(() => this.nut.SetUsername(settings.username))
-          .then(() => this.nut.SetPassword(settings.password))
-          .then(() => this.nut.GetUPSList())
-          .then(async (list) => {
-            for (const ups of Object.keys(list)) {
-              foundDevices.push(await this.getDeviceData(ups, settings));
+          this.nut.SetUsername(settings.username, (usernameErr) => {
+            if (usernameErr) {
+              this.log('SetUsername error:', usernameErr);
             }
-          })
-          .then(() => this.saveSettings(data))
-          .catch((err) => this.log(err))
-          .finally(() => {
-            this.nut.close();
+
+            this.nut.SetPassword(settings.password, (passwordErr) => {
+              if (passwordErr) {
+                this.log('SetPassword error:', passwordErr);
+              }
+
+              this.nut.GetUPSList((list, listErr) => {
+                if (listErr) {
+                  this.log('GetUPSList error:', listErr);
+                  this.nut.close();
+                  reject(listErr);
+                  return;
+                }
+
+                this.log('Found UPS devices:', Object.keys(list));
+
+                const processDevices = async () => {
+                  for (const ups of Object.keys(list)) {
+                    const device = await this.getDeviceData(ups, settings);
+                    foundDevices.push(device);
+                  }
+                  this.saveSettings(data);
+                  this.nut.close();
+                  resolve();
+                };
+
+                processDevices().catch((err) => {
+                  this.log('Error processing devices:', err);
+                  this.nut.close();
+                  reject(err);
+                });
+              });
+            });
           });
-      } catch (err) {
-        this.log(`There was an error: ${err.message}`);
-      }
+        });
+
+        this.nut.start();
+      });
     });
 
     session.setHandler('list_devices', async () => {
@@ -78,39 +105,44 @@ class UPSDriver extends Driver {
     this.homey.settings.set('watt_nominal', data.watt_nominal);
   }
 
-  async getDeviceData(name, settings) {
-    let device = {};
-    this.log('Requesting UPS data for:', name);
-    const result = await this.nut.GetUPSVars(name)
-      .then((res) => res)
-      .catch((err) => this.log(err));
+  getDeviceData(name, settings) {
+    return new Promise((resolve, reject) => {
+      this.log('Requesting UPS data for:', name);
 
-    if (result) {
-      this.log('Response:', result);
+      this.nut.GetUPSVars(name, (vars, err) => {
+        if (err) {
+          this.log('GetUPSVars error:', err);
+          reject(err);
+          return;
+        }
 
-      const status = parseUPSStatus(result, settings.estimate_power, settings.watt_nominal);
-      device = {
-        name: status.values.name,
-        data: {
-          name,
-          id: status.values.id,
-        },
-        settings: {
-          ip: settings.ip,
-          port: Number(settings.port) || 3493,
-          interval: settings.interval,
-          username: settings.username,
-          password: settings.password,
-          estimate_power: settings.estimate_power,
-          watt_nominal: settings.watt_nominal,
-        },
-        store: {
-          capabilities: status.capabilities,
-          first_run: true,
-        },
-      };
-    }
-    return device;
+        this.log('Response:', vars);
+
+        const status = parseUPSStatus(vars, settings.estimate_power, settings.watt_nominal);
+        const device = {
+          name: status.values.name,
+          data: {
+            name,
+            id: status.values.id,
+          },
+          settings: {
+            ip: settings.ip,
+            port: Number(settings.port) || 3493,
+            interval: settings.interval,
+            username: settings.username,
+            password: settings.password,
+            estimate_power: settings.estimate_power,
+            watt_nominal: settings.watt_nominal,
+          },
+          store: {
+            capabilities: status.capabilities,
+            first_run: true,
+          },
+        };
+
+        resolve(device);
+      });
+    });
   }
 
 }
