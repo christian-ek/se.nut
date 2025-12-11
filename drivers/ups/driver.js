@@ -1,7 +1,7 @@
 'use strict';
 
 const { Driver } = require('homey');
-const Nut = require('../../lib/node-nut');
+const Nut = require('node-nut');
 const { parseUPSStatus } = require('../../lib/Utils');
 
 class UPSDriver extends Driver {
