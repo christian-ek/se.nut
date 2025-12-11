@@ -6,21 +6,25 @@ const Nut = require('node-nut');
 
 class UPSDevice extends Device {
 
-  nut;
-
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
-    this.initNut();
-
     this.device = this.getData();
     const updateInterval = Number(this.getSetting('interval')) * 1000;
     const { device } = this;
     this.log(`[${this.getName()}][${device.id}]`, `Update Interval: ${updateInterval}`);
     this.log(`[${this.getName()}][${device.id}]`, 'Connected to device');
     this.interval = setInterval(async () => {
-      await this.getDeviceData();
+      try {
+        await this.getDeviceData();
+        if (!this.getAvailable()) {
+          this.setAvailable().catch(this.error);
+        }
+      } catch (err) {
+        this.log('Failed to refresh device data:', err.message);
+        this.setUnavailable(`Connection failed: ${err.message}`).catch(this.error);
+      }
     }, updateInterval);
 
     this.log('UPS device has been initialized');
@@ -30,35 +34,47 @@ class UPSDevice extends Device {
     const { device } = this;
     this.log(`[${this.getName()}][${device.id}]`, 'Refresh device');
 
-    await this.nut.start()
-      .then(() => this.nut.SetUsername(this.getSetting.username))
-      .then(() => this.nut.SetPassword(this.getSetting.password))
-      .then(() => this.nut.GetUPSVars(device.name))
-      .then((res) => {
-        this.log(res);
-        const estimatePower = this.getSetting('estimate_power');
-        const wattNominal = estimatePower === true ? this.getSetting('watt_nominal') : null;
-        return parseUPSStatus(res, estimatePower, wattNominal);
-      })
-      .then((res) => {
-        this.log(res);
-        this.setCapabilities(res);
-      })
-      .catch((err) => this.log(err))
-      .finally(() => {
-        this.nut.close();
-      });
-  }
+    // Create a new Nut connection for each data fetch
+    const nut = new Nut(parseInt(this.getSetting('port'), 10), this.getSetting('ip'));
 
-  initNut() {
-    this.nut = new Nut(parseInt(this.getSetting('port'), 10), this.getSetting('ip'));
+    return new Promise((resolve, reject) => {
+      const onReady = () => {
+        nut.SetUsername(this.getSetting('username'), (err) => {
+          if (err) {
+            this.log('SetUsername error:', err);
+          }
+          nut.SetPassword(this.getSetting('password'), (err2) => {
+            if (err2) {
+              this.log('SetPassword error:', err2);
+            }
+            nut.GetUPSVars(device.name, (vars, err3) => {
+              if (err3) {
+                this.log('GetUPSVars error:', err3);
+                nut.close();
+                reject(err3);
+                return;
+              }
+              this.log(vars);
+              const estimatePower = this.getSetting('estimate_power');
+              const wattNominal = estimatePower === true ? this.getSetting('watt_nominal') : null;
+              const status = parseUPSStatus(vars, estimatePower, wattNominal);
+              this.log(status);
+              this.setCapabilities(status);
+              nut.close();
+              resolve();
+            });
+          });
+        });
+      };
 
-    this.nut.on('error', (err) => {
-      this.log(`There was an error: ${err}`);
-    });
+      const onError = (err) => {
+        this.log('Connection error:', err);
+        reject(err);
+      };
 
-    this.nut.on('close', () => {
-      this.log('Connection closed.');
+      nut.on('ready', onReady);
+      nut.on('error', onError);
+      nut.start();
     });
   }
 
