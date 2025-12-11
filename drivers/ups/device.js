@@ -2,7 +2,7 @@
 
 const { Device } = require('homey');
 const { parseUPSStatus } = require('../../lib/Utils');
-const Nut = require('../../lib/node-nut');
+const Nut = require('node-nut');
 
 class UPSDevice extends Device {
 
