@@ -46,5 +46,8 @@
   },
   "1.1.5": {
     "en": "UPS Power monitoring support by jinie"
+  },
+  "1.1.6": {
+    "en": "fix import bug"
   }
 }
