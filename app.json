@@ -488,6 +488,7 @@
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
+      "insights": true,
       "units": {
         "en": "minutes",
         "sv": "minuter"
@@ -542,6 +543,7 @@
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
+      "insights": true,
       "units": {
         "en": "V",
         "sv": "V"
