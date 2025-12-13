@@ -117,10 +117,10 @@
             "name": "measure_battery_runtime",
             "type": "number",
             "title": {
-              "en": "Battery runtime seconds",
-              "sv": "Batteridriftstid sekunder"
+              "en": "Battery runtime minutes",
+              "sv": "Batteridriftstid minuter"
             },
-            "example": 120
+            "example": 20
           }
         ],
         "args": [
@@ -165,8 +165,8 @@
           "sv": "Det här flödet fortsätter om batteridriftstiden är lika/inte lika med det satta värded."
         },
         "titleFormatted": {
-          "en": "The battery runtime is !{{equal|not equal}} to [[measure_battery_runtime]] seconds",
-          "sv": "Batteridriftstiden är !{{lika|inte lika}} med [[measure_battery_runtime]] sekunder."
+          "en": "The battery runtime is !{{equal|not equal}} to [[measure_battery_runtime]] minutes",
+          "sv": "Batteridriftstiden är !{{lika|inte lika}} med [[measure_battery_runtime]] minuter."
         },
         "args": [
           {
@@ -179,8 +179,8 @@
               "sv": "Sätt ett värde"
             },
             "title": {
-              "en": "Battery runtime seconds",
-              "sv": "Batteridriftstid sekunder"
+              "en": "Battery runtime minutes",
+              "sv": "Batteridriftstid minuter"
             }
           },
           {
@@ -201,8 +201,8 @@
           "sv": "Det här flödet fortsätter om batteridriftstiden är/inte är mindre än det satta värded."
         },
         "titleFormatted": {
-          "en": "The battery runtime is !{{less|greater}} than [[measure_battery_runtime]] seconds",
-          "sv": "Batteridriftstiden är !{{mindre|mer}} än [[measure_battery_runtime]] sekunder."
+          "en": "The battery runtime is !{{less|greater}} than [[measure_battery_runtime]] minutes",
+          "sv": "Batteridriftstiden är !{{mindre|mer}} än [[measure_battery_runtime]] minuter."
         },
         "args": [
           {
@@ -215,8 +215,8 @@
               "sv": "Sätt ett värde"
             },
             "title": {
-              "en": "Battery runtime seconds",
-              "sv": "Batteridriftstid sekunder"
+              "en": "Battery runtime minutes",
+              "sv": "Batteridriftstid minuter"
             }
           },
           {
@@ -251,6 +251,7 @@
         "status",
         "measure_voltage.input",
         "measure_voltage.output",
+        "measure_voltage.battery",
         "measure_current.input",
         "measure_current.output",
         "measure_temperature",
@@ -277,6 +278,12 @@
           "title": {
             "en": "Voltage output",
             "sv": "Utgångsspänning"
+          }
+        },
+        "measure_voltage.battery": {
+          "title": {
+            "en": "Battery voltage",
+            "sv": "Batterispänning"
           }
         },
         "measure_current.input": {
@@ -461,6 +468,7 @@
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
+      "insights": true,
       "insightsTitleTrue": {
         "en": "UPS entered battery mode",
         "sv": "UPS gick in i batteriläge"
@@ -480,9 +488,10 @@
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
+      "insights": true,
       "units": {
-        "en": "seconds",
-        "sv": "sekunder"
+        "en": "minutes",
+        "sv": "minuter"
       }
     },
     "measure_load": {
@@ -534,6 +543,7 @@
       "uiComponent": "sensor",
       "getable": true,
       "setable": false,
+      "insights": true,
       "units": {
         "en": "V",
         "sv": "V"

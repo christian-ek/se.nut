@@ -8,8 +8,9 @@
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
+  "insights": true,
   "units": {
-    "en": "seconds",
-    "sv": "sekunder"
+    "en": "minutes",
+    "sv": "minuter"
   }
 }

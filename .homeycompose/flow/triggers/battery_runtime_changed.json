@@ -15,10 +15,10 @@
         "name": "measure_battery_runtime",
         "type": "number",
         "title": {
-            "en": "Battery runtime seconds",
-            "sv": "Batteridriftstid sekunder"
+            "en": "Battery runtime minutes",
+            "sv": "Batteridriftstid minuter"
         },
-        "example": 120
+        "example": 20
     }
 ],
   "args": [
@@ -29,4 +29,3 @@
     }
   ]
 }
-
