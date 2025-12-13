@@ -9,7 +9,7 @@
   "getable": true,
   "setable": false,
   "units": {
-    "en": "seconds",
-    "sv": "sekunder"
+    "en": "minutes",
+    "sv": "minuter"
   }
 }
