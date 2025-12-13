@@ -59,9 +59,15 @@ class UPSDevice extends Device {
               const wattNominal = estimatePower === true ? this.getSetting('watt_nominal') : null;
               const status = parseUPSStatus(vars, estimatePower, wattNominal);
               this.log(status);
-              this.setCapabilities(status);
-              nut.close();
-              resolve();
+              this.setCapabilities(status)
+                .then(() => {
+                  nut.close();
+                  resolve();
+                })
+                .catch((capabilityErr) => {
+                  nut.close();
+                  reject(capabilityErr);
+                });
             });
           });
         });
@@ -78,35 +84,64 @@ class UPSDevice extends Device {
     });
   }
 
-  setCapabilities(status) {
+  async setCapabilities(status) {
     const firstRun = this.getStoreValue('first_run');
-    const deviceCapabilities = this.getStoreValue('capabilities');
+    const storedCapabilitiesRaw = this.getStoreValue('capabilities');
+    const storedCapabilities = Array.isArray(storedCapabilitiesRaw) ? storedCapabilitiesRaw : [];
+    const statusCapabilities = status && Array.isArray(status.capabilities) ? status.capabilities : [];
 
-    if (firstRun != null && firstRun) {
-      /*
-      * Go through all capabilities on the driver and remove those not supported by device.
-      */
-      this.log('Running setCapabilities for the first time');
-      const allCapabilities = this.getCapabilities();
-      allCapabilities.forEach((capability) => {
-        if (!deviceCapabilities.includes(capability)) {
-          this.removeCapability(capability);
-          this.log(`Removing capability not supported by device [${capability}]`);
-        }
-      });
-      this.setStoreValue('first_run', false);
+    const desiredCapabilities = Array.from(new Set([...storedCapabilities, ...statusCapabilities]));
+
+    const shouldUpdateStoredCapabilities = !Array.isArray(storedCapabilitiesRaw)
+      || storedCapabilities.length !== desiredCapabilities.length
+      || storedCapabilities.some((capability) => !desiredCapabilities.includes(capability));
+
+    if (shouldUpdateStoredCapabilities) {
+      await this.setStoreValue('capabilities', desiredCapabilities);
     }
 
-    const capabilityList = deviceCapabilities == null ? status.capabilities : deviceCapabilities;
-    capabilityList.forEach((capability) => {
+    const currentCapabilities = this.getCapabilities();
+    const desiredSet = new Set(desiredCapabilities);
+    const missingCapabilities = desiredCapabilities.filter((capability) => !currentCapabilities.includes(capability));
+    const unsupportedCapabilities = currentCapabilities.filter((capability) => !desiredSet.has(capability));
+
+    if (firstRun === true) {
+      this.log('Running setCapabilities for the first time');
+    }
+
+    if (missingCapabilities.length > 0 || unsupportedCapabilities.length > 0) {
+      for (const capability of missingCapabilities) {
+        this.log(`Adding capability supported by device [${capability}]`);
+        // eslint-disable-next-line no-await-in-loop
+        await this.addCapability(capability).catch(this.error);
+      }
+
+      for (const capability of unsupportedCapabilities) {
+        this.log(`Removing capability not supported by device [${capability}]`);
+        // eslint-disable-next-line no-await-in-loop
+        await this.removeCapability(capability).catch(this.error);
+      }
+    }
+
+    if (firstRun === true) {
+      await this.setStoreValue('first_run', false);
+    }
+
+    desiredCapabilities.forEach((capability) => {
       const isSubCapability = capability.split('.').length > 1;
       this.log(`Updating capability [${capability}]`);
       if (isSubCapability) {
         const capabilityName = capability.split('.')[0];
         const subCapabilityName = capability.split('.').pop();
-        this.updateValue(`${[capabilityName]}.${[subCapabilityName]}`, status.values[capabilityName][subCapabilityName]);
+        const value = status && status.values && status.values[capabilityName]
+          ? status.values[capabilityName][subCapabilityName]
+          : null;
+        if (value == null) return;
+        this.updateValue(`${[capabilityName]}.${[subCapabilityName]}`, value);
       } else {
-        this.updateValue(capability, status.values[capability]);
+        const value = status && status.values ? status.values[capability] : null;
+        if (value == null) return;
+        this.updateValue(capability, value);
       }
     });
   }
