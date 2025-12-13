@@ -8,6 +8,7 @@
     "status",
     "measure_voltage.input",
     "measure_voltage.output",
+    "measure_voltage.battery",
     "measure_current.input",
     "measure_current.output",
     "measure_temperature",
@@ -34,6 +35,12 @@
       "title": {
         "en": "Voltage output",
         "sv": "Utgångsspänning"
+      }
+    },
+    "measure_voltage.battery": {
+      "title": {
+        "en": "Battery voltage",
+        "sv": "Batterispänning"
       }
     },
     "measure_current.input": {
