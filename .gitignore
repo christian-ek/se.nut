@@ -2,3 +2,4 @@
 /node_modules/
 /.homeybuild/
 drivers/ups/.DS_Store
+AGENTS.md
