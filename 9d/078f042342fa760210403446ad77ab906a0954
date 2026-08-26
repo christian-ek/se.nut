@@ -1,0 +1,23 @@
+app.json
+  s_2ee841040a48f0::t_0fda55488a0273 4
+.homeycompose/app.json
+  s_2ee841040a48f0::t_6e45f614016a98 3
+.homeychangelog.json
+  s_2ee841040a48f0::t_6cd70a09d86229 58-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "9d078f042342fa760210403446ad77ab906a0954",
+  "prompts": {},
+  "sessions": {
+    "s_2ee841040a48f0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f42448af-af3a-412c-bf88-e183c8b7fc3d",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Christian Ek <hi@christianek.io>"
+    }
+  }
+}
