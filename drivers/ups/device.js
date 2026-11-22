@@ -166,7 +166,7 @@ class UPSDevice extends Device {
             const wattNominal = estimatePower === true ? this.getSetting('watt_nominal') : null;
             const status = parseUPSStatus(vars, estimatePower, wattNominal);
             this.log(status);
-            this.setCapabilities(status);
+            await this.setCapabilities(status);
             closeConnection();
             resolve();
           } catch (err) {
@@ -188,7 +188,7 @@ class UPSDevice extends Device {
     });
   }
 
-  setCapabilities(status) {
+  async setCapabilities(status) {
     const firstRun = this.getStoreValue('first_run');
     const deviceCapabilities = this.getStoreValue('capabilities');
 
@@ -207,7 +207,12 @@ class UPSDevice extends Device {
       this.setStoreValue('first_run', false);
     }
 
-    const capabilityList = deviceCapabilities == null ? status.capabilities : deviceCapabilities;
+    const capabilityList = deviceCapabilities == null
+      ? status.capabilities
+      : [...new Set([...deviceCapabilities, ...status.capabilities])];
+    for (const capability of capabilityList) {
+      if (!this.hasCapability(capability)) await this.addCapability(capability);
+    }
     capabilityList.forEach((capability) => {
       const isSubCapability = capability.split('.').length > 1;
       this.log(`Updating capability [${capability}]`);
